@@ -81,6 +81,48 @@ public class ContactTest {
     }
 
     @Test
+    public void testSetLastName_empty() {
+        contact.setLastName("");
+        assertEquals("", contact.getLastName());
+    }
+
+    @Test
+    public void testSetLastName_maximum() {
+        contact.setLastName("Anagnostopoulos"); // Agnew's father's original surname
+        assertEquals("Anagnostopoulos", contact.getLastName());
+    }
+
+    @Test
+    public void testSetLastName_diacritics() {
+        contact.setLastName("Ó Gallchobhair"); // Irish spelling of my surname
+        assertEquals("Ó Gallchobhair", contact.getLastName());
+    }
+
+    @Test
+    public void testSetLastName_nonLatin() {
+        contact.setLastName("ভট্টাচার্য"); // Bhattacharya, but in Bengali
+        assertEquals("ভট্টাচার্য", contact.getLastName());
+    }
+
+    @Test
+    public void testSetLastName_null() {
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+                contact.setLastName(null);
+            });
+        assertEquals("Contact last name cannot be null", ex.getMessage());
+    }
+
+    @Test
+    public void testSetLastName_overlength() {
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+                // This (faux) surname is lovingly stolen from Hasan Minhaj's
+                // comedy special, Homecoming King.
+                contact.setLastName("Rengatramanajananam");
+            });
+        assertEquals("Contact last name must not exceed 15 characters", ex.getMessage());
+    }
+
+    @Test
     public void testGetPhone() {
         assertEquals("", contact.getPhone());
     }
