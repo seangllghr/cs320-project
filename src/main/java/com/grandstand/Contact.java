@@ -90,7 +90,7 @@ public class Contact {
         if (phone == null) {
             throw new NullPointerException("Contact phone cannot be null");
         }
-        if (Pattern.matches("\\A\\d{10}+\\Z", phone)) {
+        if (Pattern.matches("(\\A\\d{10}+\\Z)?", phone)) {
             this.phone = phone;
         } else {
             String errorMessage = "Contact phone must be exactly 10 digits (0-9)";
