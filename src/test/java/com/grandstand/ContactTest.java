@@ -128,9 +128,39 @@ public class ContactTest {
     }
 
     @Test
-    public void testSetPhone() {
-        contact.setPhone("1111111111");
-        assertEquals("1111111111", contact.getPhone());
+    public void testSetPhone_simple() {
+        contact.setPhone("1234567890");
+        assertEquals("1234567890", contact.getPhone());
+    }
+
+    @Test
+    public void testSetPhone_empty() {
+        contact.setPhone("");
+        assertEquals("", contact.getPhone());
+    }
+
+    @Test
+    public void testSetPhone_short() {
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+                contact.setPhone("4567890");
+            });
+        assertEquals("Contact phone must be exactly 10 digits (0-9)", ex.getMessage());
+    }
+
+    @Test
+    public void testSetPhone_null() {
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+                contact.setPhone(null);
+            });
+        assertEquals("Contact phone cannot be null", ex.getMessage());
+    }
+
+    @Test
+    public void testSetPhone_letters() {
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+                contact.setPhone("123456789Q");
+            });
+        assertEquals("Contact phone must be exactly 10 digits (0-9)", ex.getMessage());
     }
 
     @Test
