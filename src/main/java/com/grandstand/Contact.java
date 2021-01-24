@@ -45,9 +45,13 @@ public class Contact {
         return firstName;
     }
 
-    public void setFirstName(String firstName) throws IllegalArgumentException {
+    public void setFirstName(String firstName)
+        throws IllegalArgumentException, NullPointerException {
         // Expanding to 12 characters allows us to cover an astonishing majority
         // of the names listed on Wikipedia's lists of most common given names
+        if (firstName == null) {
+            throw new NullPointerException("Contact first name cannot be null");
+        }
         if (firstName.length() <= 12) {
                 this.firstName = firstName;
         } else {
@@ -60,9 +64,13 @@ public class Contact {
         return lastName;
     }
 
-    public void setLastName(String lastName) throws IllegalArgumentException {
+    public void setLastName(String lastName)
+        throws IllegalArgumentException, NullPointerException {
         // Similarly, adding an extra 5 characters for surnames expands our
         // capability to nearly all of the names on the various surname lists
+        if (lastName == null) {
+            throw new NullPointerException("Contact last name cannot be null");
+        }
         if (lastName.length() <= 15) {
             this.lastName = lastName;
         } else {
@@ -75,9 +83,13 @@ public class Contact {
         return phone;
     }
 
-    public void setPhone(String phone) throws IllegalArgumentException {
+    public void setPhone(String phone) throws
+        IllegalArgumentException, NullPointerException {
         // International numbers are bafflingly complex, so we're sticking with
         // US-standard NANP 10-digit numbers, as specified.
+        if (phone == null) {
+            throw new NullPointerException("Contact phone cannot be null");
+        }
         if (Pattern.matches("\\A\\d{10}+\\Z", phone)) {
             this.phone = phone;
         } else {
@@ -90,10 +102,14 @@ public class Contact {
         return address;
     }
 
-    public void setAddress(String address) throws IllegalArgumentException {
+    public void setAddress(String address)
+        throws IllegalArgumentException, NullPointerException {
         // 30 characters isn't really enough for a full US street address,
         // assuming we're including city, state, and ZIP. I've expanded it to 50
         // characters. There is no content validation.
+        if (address == null) {
+            throw new NullPointerException("Contact address cannot be null");
+        }
         if (address.length() <= 50) {
             this.address = address;
         } else {
