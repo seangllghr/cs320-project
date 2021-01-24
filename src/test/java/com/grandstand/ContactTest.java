@@ -36,8 +36,8 @@ public class ContactTest {
 
     @Test
     public void testSetFirstName_maximum() {
-        contact.setFirstName("TestyMcTesty"); // Conveniently, that's exactly 12 chars
-        assertEquals("TestyMcTesty", contact.getFirstName());
+        contact.setFirstName("Theophrastos"); // VP Spiro Agnew's father's Greek name
+        assertEquals("Theophrastos", contact.getFirstName());
     }
 
     @Test
