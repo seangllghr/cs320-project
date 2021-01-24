@@ -24,9 +24,50 @@ public class ContactTest {
     }
 
     @Test
-    public void testSetFirstName() {
+    public void testSetFirstName_simple() {
         contact.setFirstName("Testy");
         assertEquals("Testy", contact.getFirstName());
+    }
+
+    @Test public void testSetFirstName_empty() {
+        contact.setFirstName("");
+        assertEquals("", contact.getFirstName());
+    }
+
+    @Test
+    public void testSetFirstName_maximum() {
+        contact.setFirstName("TestyMcTesty"); // Conveniently, that's exactly 12 chars
+        assertEquals("TestyMcTesty", contact.getFirstName());
+    }
+
+    @Test
+    public void testSetFirstName_diacritics() {
+        contact.setFirstName("Seán"); // The Irish spelling of my first name
+        assertEquals("Seán", contact.getFirstName());
+    }
+
+    @Test
+    public void testSetFirstName_nonLatin() {
+        contact.setFirstName("بطرس"); // Arabic "Boutros" (Peter). Also RTL, which is fun
+        assertEquals("بطرس", contact.getFirstName());
+    }
+
+    @Test
+    public void testSetFirstName_null() {
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+                contact.setFirstName(null);
+            });
+
+        assertEquals("Contact first name cannot be null", ex.getMessage());
+    }
+
+    @Test
+    public void testSetFirstName_overlength() {
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+                contact.setFirstName("Oluwatamilore"); // a Yoruba name, from west Africa
+            });
+
+        assertEquals("Contact first name must not exceed 12 characters", ex.getMessage());
     }
 
     @Test
