@@ -57,7 +57,6 @@ public class ContactTest {
         Exception ex = assertThrows(NullPointerException.class, () -> {
                 contact.setFirstName(null);
             });
-
         assertEquals("Contact first name cannot be null", ex.getMessage());
     }
 
@@ -66,7 +65,6 @@ public class ContactTest {
         Exception ex = assertThrows(IllegalArgumentException.class, () -> {
                 contact.setFirstName("Oluwatamilore"); // a Yoruba name, from west Africa
             });
-
         assertEquals("Contact first name must not exceed 12 characters", ex.getMessage());
     }
 
