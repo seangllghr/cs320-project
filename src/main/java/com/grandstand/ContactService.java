@@ -1,7 +1,6 @@
 package com.grandstand;
 
 import java.util.Vector;
-import com.grandstand.Contact;
 
 public class ContactService {
     private Vector<Contact> contactList;
