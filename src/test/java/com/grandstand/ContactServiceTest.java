@@ -27,12 +27,9 @@ public class ContactServiceTest {
 
     @Test
     public void testAddManyContacts() {
-        contactService.addContact(TEST_SURNAME, TEST_NAME, TEST_PHONE, TEST_ADDRESS);
-        contactService.addContact(TEST_SURNAME, TEST_NAME, TEST_PHONE, TEST_ADDRESS);
-        contactService.addContact(TEST_SURNAME, TEST_NAME, TEST_PHONE, TEST_ADDRESS);
-        contactService.addContact(TEST_SURNAME, TEST_NAME, TEST_PHONE, TEST_ADDRESS);
-        contactService.addContact(TEST_SURNAME, TEST_NAME, TEST_PHONE, TEST_ADDRESS);
-        contactService.addContact(TEST_SURNAME, TEST_NAME, TEST_PHONE, TEST_ADDRESS);
+        for (int i = 0; i < 10; i++) {
+            contactService.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
+        }
         Contact fifthContact = contactService.getContactById("0000000005");
         assertEquals("0000000005", fifthContact.getId());
     }
@@ -45,10 +42,9 @@ public class ContactServiceTest {
 
     @Test
     public void testGetContactById_empty() {
-        Exception ex = assertThrows(NullPointerException.class, () -> {
-                contactService.getContactById("0000000002");
-            });
-        assertEquals("Contact ID not found", ex.getMessage());
+        assertThrows(NullPointerException.class,
+                     () -> contactService.getContactById("0000000002"),
+                     "Contact ID not found");
     }
 
 }
