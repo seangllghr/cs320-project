@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class ContactServiceTest {
 
-    private ContactService contactService;
+    private ContactService cs;
     private final String TEST_NAME = "Testy";
     private final String TEST_SURNAME = "McTestface";
     private final String TEST_PHONE = "5555555555";
@@ -17,9 +17,12 @@ public class ContactServiceTest {
 
     @BeforeEach
     public void setUp() {
-        contactService = new ContactService();
+        cs = new ContactService();
         assertDoesNotThrow(() -> {
-                contactService.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
+                cs.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
+            for (int i = 0; i < 10; i++) {
+                cs.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
+            }
             });
     }
 
@@ -27,23 +30,20 @@ public class ContactServiceTest {
 
     @Test
     public void testAddManyContacts() {
-        for (int i = 0; i < 10; i++) {
-            contactService.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
-        }
-        Contact fifthContact = contactService.getContactById("0000000005");
+        Contact fifthContact = cs.getContactById("0000000005");
         assertEquals("0000000005", fifthContact.getId());
     }
 
     @Test
     public void testGetContactById() {
-        Contact testContact = contactService.getContactById("0000000001");
+        Contact testContact = cs.getContactById("0000000001");
         assertEquals("0000000001", testContact.getId());
     }
 
     @Test
     public void testGetContactById_empty() {
         assertThrows(NullPointerException.class,
-                     () -> contactService.getContactById("0000000002"),
+                     () -> cs.getContactById("0000000042"),
                      "Contact ID not found");
     }
 
