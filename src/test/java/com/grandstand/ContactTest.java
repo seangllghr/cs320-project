@@ -17,6 +17,11 @@ public class ContactTest {
     }
 
     @Test
+    public void testNewContact_bad() {
+        assertThrows(IllegalArgumentException.class, () -> {new Contact("BadId");});
+    }
+
+    @Test
     public void testGetId() {
         assertEquals("1234567890", contact.getId());
     }
