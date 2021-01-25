@@ -39,4 +39,15 @@ public class ContactService {
         }
         throw new NullPointerException("Contact ID not found");
     }
+
+    public void deleteContact(String contactId) {
+        for (int i = 0; i < this.contactList.size(); i++) {
+            String thisId = this.contactList.elementAt(i).getId();
+            if (thisId.equals(contactId)) {
+                this.contactList.remove(i);
+                return;
+            }
+        }
+        throw new NullPointerException("Contact ID not found");
+    }
 }

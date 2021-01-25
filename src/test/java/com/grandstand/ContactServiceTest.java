@@ -47,4 +47,41 @@ public class ContactServiceTest {
                      "Contact ID not found");
     }
 
+    @Test
+    public void testDeleteContact_first() {
+        assertEquals("0000000001", cs.getContactById("0000000001").getId());
+        assertDoesNotThrow(() -> cs.deleteContact("0000000001"));
+        assertThrows(NullPointerException.class,
+                     () -> cs.getContactById("0000000001"),
+                     "Contact ID not found");
+    }
+
+    @Test
+    public void testDeleteContact_middle() {
+        assertEquals("0000000005", cs.getContactById("0000000005").getId());
+        assertDoesNotThrow(() -> cs.deleteContact("0000000005"));
+        assertThrows(NullPointerException.class,
+                     () -> cs.getContactById("0000000005"),
+                     "Contact ID not found");
+    }
+
+    @Test
+    public void testDeleteContact_last() {
+        assertEquals("0000000011", cs.getContactById("0000000011").getId());
+        assertDoesNotThrow(() -> cs.deleteContact("0000000011"));
+        assertThrows(NullPointerException.class,
+                     () -> cs.getContactById("0000000011"),
+                     "Contact ID not found");
+    }
+
+    @Test
+    public void testDeleteContact_doesNotRipple() {
+        // NOTE: In case the title isn't clear, this test asserts that deletion
+        // of a contact does not affect the contacts before and after it
+        assertEquals("0000000005", cs.getContactById("0000000005").getId());
+        assertDoesNotThrow(() -> cs.deleteContact("0000000005"));
+        assertEquals("0000000004", cs.getContactById("0000000004").getId());
+        assertEquals("0000000006", cs.getContactById("0000000006").getId());
+    }
+
 }
