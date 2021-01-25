@@ -175,4 +175,43 @@ public class ContactTest {
         assertEquals("123 Test Street, Madison, WI 53711", contact.getAddress());
     }
 
+    @Test
+    public void testSetAddress_multiline() {
+        contact.setAddress("123 Test Street\nMadison, WI 53711");
+        assertEquals("123 Test Street\nMadison, WI 53711", contact.getAddress());
+    }
+
+    @Test
+    public void testSetAddress_international() {
+        // This is the address of the Tokyo Central Post Office
+        String address = "〒100-8994東京都千代田区丸ノ内二丁目7番2号東京中央郵便局";
+        contact.setAddress(address);
+        assertEquals(address, contact.getAddress());
+    }
+
+    @Test
+    public void testSetAddress_internationalMultiline() {
+        // This is the three-line form of the above address
+        String address = "〒100-8994\n東京都千代田区丸ノ内二丁目7番2号\n東京中央郵便局";
+        contact.setAddress(address);
+        assertEquals(address, contact.getAddress());
+    }
+
+    @Test
+    public void testSetAddress_null() {
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+                contact.setAddress(null);
+            });
+        assertEquals("Contact address cannot be null", ex.getMessage());
+    }
+
+    @Test
+    public void testSetAddress_overlength() {
+        String bigAddress = "12345 Very Long Address Square, Los Nombres Grandes, CA 12345";
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+                contact.setAddress(bigAddress);
+            });
+        assertEquals("Contact address must be less than 50 characters", ex.getMessage());
+    }
+
 }
