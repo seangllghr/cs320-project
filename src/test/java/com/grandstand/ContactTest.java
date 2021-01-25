@@ -77,7 +77,7 @@ public class ContactTest {
     }
 
     @Test
-    public void testSetLastName() {
+    public void testSetLastName_simple() {
         // Inspired by the *real* British submarine research vessel Boaty McBoatface
         contact.setLastName("McTestface");
         assertEquals("McTestface", contact.getLastName());
@@ -172,7 +172,7 @@ public class ContactTest {
     }
 
     @Test
-    public void testSetAddress() {
+    public void testSetAddress_simple() {
         // This address actually appears on rentable.com. I think it's an oversight.
         contact.setAddress("123 Test Street, Madison, WI 53711");
         assertEquals("123 Test Street, Madison, WI 53711", contact.getAddress());
