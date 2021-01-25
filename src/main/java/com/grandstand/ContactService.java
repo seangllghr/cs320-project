@@ -50,4 +50,30 @@ public class ContactService {
         }
         throw new NullPointerException("Contact ID not found");
     }
+
+    public void updateContact(String contactId, String field, String value) {
+        for (int i = 0; i < this.contactList.size(); i++) {
+            String thisId = this.contactList.elementAt(i).getId();
+            if (thisId.equals(contactId)) {
+                switch (field) {
+                case "firstName":
+                    this.contactList.elementAt(i).setFirstName(value);
+                    return;
+                case "lastName":
+                    this.contactList.elementAt(i).setLastName(value);
+                    return;
+                case "phone":
+                    this.contactList.elementAt(i).setPhone(value);
+                    return;
+                case "address":
+                    this.contactList.elementAt(i).setAddress(value);
+                    return;
+                default:
+                    String message = String.format("Cannot update field \"%s\"", value);
+                    throw new IllegalArgumentException(message);
+                }
+            }
+        }
+        throw new NullPointerException("Contact ID not found");
+    }
 }
