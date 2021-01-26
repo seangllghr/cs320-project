@@ -85,6 +85,11 @@ public class ContactServiceTest {
     }
 
     @Test
+    public void testDeleteContact_badContactId() {
+        assertThrows(NullPointerException.class, () -> cs.deleteContact("0000000047"));
+    }
+
+    @Test
     public void testUpdateContactFirstName() {
         String contactId = "0000000004";
         String newName = "Brian";

@@ -48,7 +48,7 @@ public class Contact {
     public void setFirstName(String firstName)
         throws IllegalArgumentException, NullPointerException {
         // Expanding to 12 characters allows us to cover an astonishing majority
-        // of the names listed on Wikipedia's lists of most common given names
+        // of the names listed on Wikipedia's lists of most common given names.
         if (firstName == null) {
             throw new NullPointerException("Contact first name cannot be null");
         }
@@ -66,8 +66,8 @@ public class Contact {
 
     public void setLastName(String lastName)
         throws IllegalArgumentException, NullPointerException {
-        // Similarly, adding an extra 5 characters for surnames expands our
-        // capability to nearly all of the names on the various surname lists
+        // Similarly, adding an extra 5 characters expands our capability to a
+        // breathtaking majority of the world's surnames
         if (lastName == null) {
             throw new NullPointerException("Contact last name cannot be null");
         }
@@ -106,7 +106,8 @@ public class Contact {
         throws IllegalArgumentException, NullPointerException {
         // 30 characters isn't really enough for a full US street address,
         // assuming we're including city, state, and ZIP. I've expanded it to 50
-        // characters. There is no content validation.
+        // characters. Aside from length, addresses may consist of any Unicode
+        // character and can span multiple lines.
         if (address == null) {
             throw new NullPointerException("Contact address cannot be null");
         }
