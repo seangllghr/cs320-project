@@ -94,7 +94,7 @@ public class ContactServiceTest {
         String contactId = "0000000004";
         String newName = "Brian";
         assertEquals(TEST_NAME, cs.getContactById(contactId).getFirstName());
-        cs.updateContact(contactId, "firstName", newName);
+        cs.updateContact(contactId, Contact.UpdateableField.FIRST_NAME, newName);
         assertEquals(newName, cs.getContactById(contactId).getFirstName());
     }
 
@@ -103,7 +103,7 @@ public class ContactServiceTest {
         String contactId = "0000000009";
         String newSurname = "Biller";
         assertEquals(TEST_SURNAME, cs.getContactById(contactId).getLastName());
-        cs.updateContact(contactId, "lastName", newSurname);
+        cs.updateContact(contactId, Contact.UpdateableField.LAST_NAME, newSurname);
         assertEquals(newSurname, cs.getContactById(contactId).getLastName());
     }
 
@@ -112,7 +112,7 @@ public class ContactServiceTest {
         String contactId = "0000000003";
         String newPhone = "1234567890";
         assertEquals(TEST_PHONE, cs.getContactById(contactId).getPhone());
-        cs.updateContact(contactId, "phone", newPhone);
+        cs.updateContact(contactId, Contact.UpdateableField.PHONE, newPhone);
         assertEquals(newPhone, cs.getContactById(contactId).getPhone());
     }
 
@@ -121,7 +121,7 @@ public class ContactServiceTest {
         String contactId = "0000000008";
         String newAddress = "456 Some Other Street, Anytown, KY 09876";
         assertEquals(TEST_ADDRESS, cs.getContactById(contactId).getAddress());
-        cs.updateContact(contactId, "address", newAddress);
+        cs.updateContact(contactId, Contact.UpdateableField.ADDRESS, newAddress);
         assertEquals(newAddress, cs.getContactById(contactId).getAddress());
     }
 
@@ -130,17 +130,10 @@ public class ContactServiceTest {
         String contactId = "0000000047";
         String newName = "Jim";
         assertThrows(NullPointerException.class,
-                     () -> cs.updateContact(contactId, "firstName", newName),
+                     () -> cs.updateContact(contactId,
+                                            Contact.UpdateableField.FIRST_NAME,
+                                            newName),
                      "Contact ID not found");
-    }
-
-    @Test
-    public void testUpdateBadField() {
-        String contactId = "0000000002";
-        String newId = "0000000017";
-        assertThrows(IllegalArgumentException.class,
-                     () -> cs.updateContact(contactId, "contactId", newId),
-                     "Cannot update field \"contactId\"");
     }
 
 }

@@ -2,6 +2,9 @@ package com.grandstand;
 
 import java.util.Vector;
 
+/**
+ * A collection of contacts with facilities to manipulate the collection
+ */
 public class ContactService {
     private Vector<Contact> contactList;
     private int idCounter;
@@ -11,8 +14,16 @@ public class ContactService {
         this.idCounter = 1;
     }
 
+    /**
+     * Add a new contact to the collection with the next ID from the counter
+     *
+     * @param firstName the contact's first name (given name)
+     * @param lastName the contact's last name (surname)
+     * @param phone the contact's 10-digit phone number, with no extraneous chars
+     * @param address the contact's address
+     */
     public void addContact(String firstName, String lastName,
-                           String phone, String Address) {
+                           String phone, String address) {
 
         // Generate a new contact ID from the ID counter
         String contactId = String.format("%010d", this.idCounter);
@@ -22,14 +33,20 @@ public class ContactService {
         newContact.setFirstName(firstName);
         newContact.setLastName(lastName);
         newContact.setPhone(phone);
-        newContact.setAddress(Address);
+        newContact.setAddress(address);
 
         // Add the new contact to the list
         this.contactList.add(newContact);
         this.idCounter++;
     }
 
-    public Contact getContactById(String contactId) {
+    /**
+     * Retrieve a {@code Contact} object from the collection
+     * @param contactId the ID string of the desired contact
+     * @return the {@code Contact} object matching {@code contactId}
+     * @throws NullPointerException if the target contact cannot be found
+     */
+    public Contact getContactById(String contactId) throws NullPointerException {
         for (int i = 0; i < this.contactList.size(); i++) {
             String thisId = this.contactList.elementAt(i).getId();
             if (thisId.equals(contactId)) {
@@ -39,7 +56,12 @@ public class ContactService {
         throw new NullPointerException("Contact ID not found");
     }
 
-    public void deleteContact(String contactId) {
+    /**
+     * Remove a contact from the collection
+     * @param contactId the ID string of the contact to remove
+     * @throws NullPointerException if the contact does not exist
+     */
+    public void deleteContact(String contactId) throws NullPointerException{
         for (int i = 0; i < this.contactList.size(); i++) {
             String thisId = this.contactList.elementAt(i).getId();
             if (thisId.equals(contactId)) {
@@ -50,26 +72,32 @@ public class ContactService {
         throw new NullPointerException("Contact ID not found");
     }
 
-    public void updateContact(String contactId, String field, String value) {
+    /**
+     * Update the specified field of a contact with the specified value
+     *
+     * @param contactId the ID string of the contact to update
+     * @param field the contact field to update
+     * @param value the new value for the updated field
+     * @throws NullPointerException if the contact does not exist
+     */
+    public void updateContact(String contactId, Contact.UpdateableField field, String value)
+        throws IllegalArgumentException, NullPointerException {
         for (int i = 0; i < this.contactList.size(); i++) {
             String thisId = this.contactList.elementAt(i).getId();
             if (thisId.equals(contactId)) {
                 switch (field) {
-                case "firstName":
+                case FIRST_NAME:
                     this.contactList.elementAt(i).setFirstName(value);
                     return;
-                case "lastName":
+                case LAST_NAME:
                     this.contactList.elementAt(i).setLastName(value);
                     return;
-                case "phone":
+                case PHONE:
                     this.contactList.elementAt(i).setPhone(value);
                     return;
-                case "address":
+                case ADDRESS:
                     this.contactList.elementAt(i).setAddress(value);
                     return;
-                default:
-                    String message = String.format("Cannot update field \"%s\"", value);
-                    throw new IllegalArgumentException(message);
                 }
             }
         }

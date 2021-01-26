@@ -3,7 +3,7 @@ package com.grandstand;
 import java.util.regex.Pattern;
 
 /**
- * The Contact class implements the data backend for the ContactService
+ * A discrete contact data structure, with facilities for manipulation
  * <p>
  * Several adaptations from the original spec have been made. Notably, the
  * <code>firstName</code>, <code>lastName</code>, and <code>address</code> data
@@ -19,6 +19,10 @@ public class Contact {
     private String lastName;
     private String phone;
     private String address;
+
+    public static enum UpdateableField {
+        FIRST_NAME, LAST_NAME, PHONE, ADDRESS
+    }
 
     /**
      * Initialize an empty Contact with ID <code>contactId</code>
