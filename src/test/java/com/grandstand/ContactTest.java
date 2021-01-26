@@ -18,7 +18,9 @@ public class ContactTest {
 
     @Test
     public void testNewContact_bad() {
-        assertThrows(IllegalArgumentException.class, () -> {new Contact("BadId");});
+        assertThrows(IllegalArgumentException.class, () -> {
+                new Contact("This ID is way too long and has spaces");
+            });
     }
 
     @Test

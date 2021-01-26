@@ -23,7 +23,7 @@ public class Contact {
     /**
      * Initialize an empty Contact with ID <code>contactId</code>
      *
-     * @param contactId a 10-character alphanumeric ID string
+     * @param contactId an alphanumeric ID string of 10 or fewer characters
      */
     public Contact(String contactId) throws IllegalArgumentException {
         if (contactId.matches("[0-9A-Za-z]+")) {
