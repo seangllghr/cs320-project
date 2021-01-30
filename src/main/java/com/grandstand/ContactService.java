@@ -23,7 +23,8 @@ public class ContactService {
      * @param address the contact's address
      */
     public void addContact(String firstName, String lastName,
-                           String phone, String address) {
+                           String phone, String address)
+        throws IllegalArgumentException, NullPointerException {
 
         // Generate a new contact ID from the ID counter
         String contactId = String.format("%010d", this.idCounter);
