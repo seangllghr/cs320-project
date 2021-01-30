@@ -20,7 +20,7 @@ public class ContactServiceTest {
     public void setUp() {
         cs = new ContactService();
         assertDoesNotThrow(() -> {
-                cs.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
+            cs.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
             for (int i = 0; i < 10; i++) {
                 cs.addContact(TEST_NAME, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
             }
@@ -54,7 +54,7 @@ public class ContactServiceTest {
     }
 
     @Test
-    public void testGetContactById_empty() {
+    public void testGetNonexistentContact() {
         assertThrows(NullPointerException.class,
                      () -> cs.getContactById("0000000042"),
                      "Contact ID not found");
@@ -62,28 +62,31 @@ public class ContactServiceTest {
 
     @Test
     public void testDeleteContact_first() {
-        assertEquals("0000000001", cs.getContactById("0000000001").getId());
-        assertDoesNotThrow(() -> cs.deleteContact("0000000001"));
+        String contactId = "0000000001";
+		assertEquals(contactId, cs.getContactById(contactId).getId());
+        assertDoesNotThrow(() -> cs.deleteContact(contactId));
         assertThrows(NullPointerException.class,
-                     () -> cs.getContactById("0000000001"),
+                     () -> cs.getContactById(contactId),
                      "Contact ID not found");
     }
 
     @Test
     public void testDeleteContact_middle() {
-        assertEquals("0000000005", cs.getContactById("0000000005").getId());
-        assertDoesNotThrow(() -> cs.deleteContact("0000000005"));
+        String contactId = "0000000005";
+		assertEquals(contactId, cs.getContactById(contactId).getId());
+        assertDoesNotThrow(() -> cs.deleteContact(contactId));
         assertThrows(NullPointerException.class,
-                     () -> cs.getContactById("0000000005"),
+                     () -> cs.getContactById(contactId),
                      "Contact ID not found");
     }
 
     @Test
     public void testDeleteContact_last() {
-        assertEquals("0000000011", cs.getContactById("0000000011").getId());
-        assertDoesNotThrow(() -> cs.deleteContact("0000000011"));
+        String contactId = "0000000011";
+		assertEquals(contactId, cs.getContactById(contactId).getId());
+        assertDoesNotThrow(() -> cs.deleteContact(contactId));
         assertThrows(NullPointerException.class,
-                     () -> cs.getContactById("0000000011"),
+                     () -> cs.getContactById(contactId),
                      "Contact ID not found");
     }
 
@@ -91,10 +94,13 @@ public class ContactServiceTest {
     public void testDeleteContact_doesNotRipple() {
         // NOTE: In case the title isn't clear, this test asserts that deletion
         // of a contact does not affect the contacts before and after it
-        assertEquals("0000000005", cs.getContactById("0000000005").getId());
-        assertDoesNotThrow(() -> cs.deleteContact("0000000005"));
-        assertEquals("0000000004", cs.getContactById("0000000004").getId());
-        assertEquals("0000000006", cs.getContactById("0000000006").getId());
+        String contactId = "0000000005";
+        String contactIdBefore = "0000000004";
+        String contactIdAfter = "0000000006";
+		assertEquals(contactId, cs.getContactById(contactId).getId());
+        assertDoesNotThrow(() -> cs.deleteContact(contactId));
+		assertEquals(contactIdBefore, cs.getContactById(contactIdBefore).getId());
+		assertEquals(contactIdAfter, cs.getContactById(contactIdAfter).getId());
     }
 
     @Test
@@ -148,7 +154,7 @@ public class ContactServiceTest {
     }
 
     @Test
-    public void TestUpdateContact_badField() {
+    public void TestUpdateContact_badValue() {
         // Like with addContact, if we get one of each error, we should get
         // all of them
         String contactId = "0000000007";

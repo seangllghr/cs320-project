@@ -21,6 +21,8 @@ public class ContactService {
      * @param lastName the contact's last name (surname)
      * @param phone the contact's 10-digit phone number, with no extraneous chars
      * @param address the contact's address
+     * @throws IllegalArgumentException if a bad value is passed for any param
+     * @throws NullPointerException if {@code null} is passed for any param
      */
     public void addContact(String firstName, String lastName,
                            String phone, String address)
