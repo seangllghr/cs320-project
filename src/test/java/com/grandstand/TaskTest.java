@@ -111,4 +111,13 @@ public class TaskTest {
         assertEquals(newDescription, task.getDescription());
     }
 
+    @Test
+    public void testSetDescription_overlength() {
+        String newDescription =
+                "This description must be much longer than 50 characters.";
+        assertThrows(IllegalArgumentException.class, () -> {
+            task.setDescription(newDescription);
+        }, "Task description must not exceed 50 characters");
+    }
+
 }
