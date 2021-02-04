@@ -1,5 +1,8 @@
 package com.grandstand;
 
+/**
+ * Represents a single to-do list item in memory
+ */
 public class Task {
 
     private final String ID;
@@ -10,6 +13,12 @@ public class Task {
         NAME, DESCRIPTION
     }
 
+    /**
+     * Create a new Task
+     *
+     * @param taskId a string of no more than 10 alphanumeric characters
+     * @throws IllegalArgumentException if the ID string is invalid
+     */
     public Task(String taskId) throws IllegalArgumentException {
         if (taskId.matches("[0-9A-Za-z]+")) {
             this.ID = taskId;
@@ -28,7 +37,15 @@ public class Task {
         return this.name;
     }
 
-    public void setName(String newName) {
+    /**
+     * Change the task name
+     *
+     * @param newName the new task name string of 20 chars or less
+     * @throws IllegalArgumentException for an invalid name string
+     * @throws NullPointerException if {@code null} is passed
+     */
+    public void setName(String newName)
+        throws IllegalArgumentException, NullPointerException {
         if (newName == null) {
             throw new NullPointerException("Task name cannot be null");
         }
@@ -44,6 +61,13 @@ public class Task {
         return this.description;
     }
 
+    /**
+     * Change the task description
+     *
+     * @param newDescription the new description string of 50 chars or less
+     * @throws IllegalArgumentException for an invalid description string
+     * @throws NullPointerException if {@code null} is passed
+     */
     public void setDescription(String newDescription)
         throws IllegalArgumentException, NullPointerException {
         if (newDescription == null) {
