@@ -1,6 +1,6 @@
 package com.grandstand;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.NullPointerException;
@@ -18,9 +18,18 @@ public class ContactTest {
 
     @Test
     public void testNewContact_bad() {
-        assertThrows(IllegalArgumentException.class, () -> {
-                new Contact("This ID is way too long and has spaces");
-            });
+        assertThrows(IllegalArgumentException.class,
+                     () -> new Contact("This ID is way too long and has spaces"),
+                     "Invalid ID string");
+        assertThrows(IllegalArgumentException.class,
+                     () -> new Contact("AVeryLongIDThatHasNoSpaces"),
+                     "Invalid ID string");
+    }
+
+    @Test
+    public void testNewContact_null() {
+        assertThrows(NullPointerException.class, () -> new Contact(null),
+                     "Contact ID cannot be null");
     }
 
     @Test
@@ -64,18 +73,16 @@ public class ContactTest {
 
     @Test
     public void testSetFirstName_null() {
-        Exception ex = assertThrows(NullPointerException.class, () -> {
-                contact.setFirstName(null);
-            });
-        assertEquals("Contact first name cannot be null", ex.getMessage());
+        assertThrows(NullPointerException.class,
+                     () -> contact.setFirstName(null),
+                     "Contact first name cannot be null");
     }
 
     @Test
     public void testSetFirstName_overlength() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                contact.setFirstName("Oluwatamilore"); // a Yoruba name, from west Africa
-            });
-        assertEquals("Contact first name must not exceed 12 characters", ex.getMessage());
+        assertThrows(IllegalArgumentException.class,
+                     () -> contact.setFirstName("Oluwatamilore"), // a Yoruba name, from west Africa
+                     "Contact first name must not exceed 12 characters");
     }
 
     @Test
@@ -116,20 +123,18 @@ public class ContactTest {
 
     @Test
     public void testSetLastName_null() {
-        Exception ex = assertThrows(NullPointerException.class, () -> {
-                contact.setLastName(null);
-            });
-        assertEquals("Contact last name cannot be null", ex.getMessage());
+        assertThrows(NullPointerException.class,
+                     () -> contact.setLastName(null),
+                     "Contact last name cannot be null");
     }
 
     @Test
     public void testSetLastName_overlength() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                // This (faux) surname is lovingly stolen from Hasan Minhaj's
-                // comedy special, Homecoming King.
-                contact.setLastName("Rengatramanajananam");
-            });
-        assertEquals("Contact last name must not exceed 15 characters", ex.getMessage());
+        // This (faux) surname is lovingly stolen from Hasan Minhaj's
+        // comedy special, Homecoming King.
+        assertThrows(IllegalArgumentException.class,
+                     () -> contact.setLastName("Rengatramanajananam"),
+                     "Contact last name must not exceed 15 characters");
     }
 
     @Test
@@ -151,26 +156,23 @@ public class ContactTest {
 
     @Test
     public void testSetPhone_short() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                contact.setPhone("4567890");
-            });
-        assertEquals("Contact phone must be exactly 10 digits (0-9)", ex.getMessage());
+        assertThrows(IllegalArgumentException.class,
+                     () -> contact.setPhone("4567890"),
+                     "Contact phone must be exactly 10 digits (0-9)");
     }
 
     @Test
     public void testSetPhone_null() {
-        Exception ex = assertThrows(NullPointerException.class, () -> {
-                contact.setPhone(null);
-            });
-        assertEquals("Contact phone cannot be null", ex.getMessage());
+        assertThrows(NullPointerException.class,
+                     () -> contact.setPhone(null),
+                     "Contact phone cannot be null");
     }
 
     @Test
     public void testSetPhone_letters() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                contact.setPhone("123456789Q");
-            });
-        assertEquals("Contact phone must be exactly 10 digits (0-9)", ex.getMessage());
+        assertThrows(IllegalArgumentException.class,
+                     () -> contact.setPhone("123456789Q"),
+                     "Contact phone must be exactly 10 digits (0-9)");
     }
 
     @Test
@@ -209,19 +211,17 @@ public class ContactTest {
 
     @Test
     public void testSetAddress_null() {
-        Exception ex = assertThrows(NullPointerException.class, () -> {
-                contact.setAddress(null);
-            });
-        assertEquals("Contact address cannot be null", ex.getMessage());
+        assertThrows(NullPointerException.class,
+                     () -> contact.setAddress(null),
+                     "Contact address cannot be null");
     }
 
     @Test
     public void testSetAddress_overlength() {
         String bigAddress = "12345 Very Long Address Square, Los Nombres Grandes, CA 12345";
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                contact.setAddress(bigAddress);
-            });
-        assertEquals("Contact address must be less than 50 characters", ex.getMessage());
+        assertThrows(IllegalArgumentException.class,
+                     () -> contact.setAddress(bigAddress),
+                     "Contact address must be less than 50 characters");
     }
 
 }
