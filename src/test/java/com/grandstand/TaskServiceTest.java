@@ -12,7 +12,7 @@ public class TaskServiceTest {
 
     private TaskService ts;
     private final String TEST_NAME = "This is a task";
-    private final String TEST_DESCRIPTION = "Atonishing! Exactly 50 characters of description";
+    private final String TEST_DESCRIPTION = "Astonishing! Exactly 50 characters of description";
 
     @BeforeEach
     public void setUp() {
