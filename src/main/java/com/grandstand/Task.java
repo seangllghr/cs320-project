@@ -20,7 +20,10 @@ public class Task {
      * @throws IllegalArgumentException if the ID string is invalid
      */
     public Task(String taskId) throws IllegalArgumentException {
-        if (taskId.matches("[0-9A-Za-z]+")) {
+        if (taskId == null) {
+            throw new NullPointerException("Task ID cannot be null");
+        }
+        if (taskId.matches("[0-9A-Za-z]{1,10}")) {
             this.ID = taskId;
         } else {
             throw new IllegalArgumentException("Invalid ID string");
