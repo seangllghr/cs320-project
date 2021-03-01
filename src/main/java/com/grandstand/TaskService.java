@@ -7,11 +7,11 @@ import java.util.Vector;
  */
 public class TaskService {
 
-    private Vector<Task> taskList;
+    private final Vector<Task> taskList;
     private int idCounter;
 
     public TaskService() {
-        this.taskList = new Vector<Task>();
+        this.taskList = new Vector<>();
         this.idCounter = 1;
     }
 
@@ -38,37 +38,47 @@ public class TaskService {
     }
 
     /**
-     * Loops through the task list looking for the target task
+     * Retrieve the index of the task with the specified ID string
      *
-     * @param taskId the ID string of the target task
-     * @return the {@code Task} object matching {@code taskId}
-     * @throws NullPointerException if {@code taskId} is not found
+     * @param taskId the ID string to match
+     * @return the index of the matching task
+     * @throws IllegalArgumentException if the ID string is invalid
+     * @throws NullPointerException if {@code} null is passed or match not found
      */
-    public Task getTaskById(String taskId) throws NullPointerException {
+    private int findTask(String taskId)
+        throws IllegalArgumentException, NullPointerException {
         for (int i = 0; i < this.taskList.size(); i++) {
             String thisId = this.taskList.elementAt(i).getId();
             if (thisId.equals(taskId)) {
-                return this.taskList.elementAt(i);
+                return i;
             }
         }
         throw new NullPointerException("Task ID not found");
     }
 
     /**
+     * Loops through the task list looking for the target task
+     *
+     * @param taskId the ID string of the target task
+     * @return the {@code Task} object matching {@code taskId}
+     * @throws IllegalArgumentException if the ID string is invalid
+     * @throws NullPointerException if {@code null} passed or ID not found
+     */
+    public Task getTaskById(String taskId) throws NullPointerException {
+        int taskIndex = findTask(taskId);
+		return this.taskList.elementAt(taskIndex);
+    }
+
+    /**
      * Searches through the task list for a matching task and removes it
      *
      * @param taskId the ID string of the task to remove
-     * @throws NullPointerException if no task matches the target ID
+     * @throws IllegalArgumentException if the ID string is invalid
+     * @throws NullPointerException if {@code null} passed or task cannot be found
      */
     public void deleteTask(String taskId) throws NullPointerException {
-        for (int i = 0; i < this.taskList.size(); i++) {
-            String thisId = this.taskList.elementAt(i).getId();
-            if (thisId.equals(taskId)) {
-                this.taskList.remove(i);
-                return;
-            }
-        }
-        throw new NullPointerException("Task ID not found");
+        int taskIndex = findTask(taskId);
+		this.taskList.remove(taskIndex);
     }
 
     /**
@@ -77,25 +87,20 @@ public class TaskService {
      * @param taskId the ID string of the task to modify
      * @param field a field to update, from the {@code Task.UpdateableField} enum
      * @param value the new value of the field
-     * @throws IllegalArgumentException if the update value is invalid
-     * @throws NullPointerException if the task cannot be found
+     * @throws IllegalArgumentException if ID string or update value is invalid
+     * @throws NullPointerException if {@code null} passed or task cannot be found
      */
     public void updateTask(String taskId, Task.UpdateableField field, String value)
         throws IllegalArgumentException, NullPointerException {
-        for (int i = 0; i < this.taskList.size(); i++) {
-            String thisId = this.taskList.elementAt(i).getId();
-            if (thisId.equals(taskId)) {
-                switch (field) {
-                case NAME:
-                    this.taskList.elementAt(i).setName(value);
-                    return;
-                case DESCRIPTION:
-                    this.taskList.elementAt(i).setDescription(value);
-                    return;
-                }
-            }
+        int taskIndex = findTask(taskId);
+        switch (field) {
+        case NAME:
+            this.taskList.elementAt(taskIndex).setName(value);
+            break;
+        case DESCRIPTION:
+            this.taskList.elementAt(taskIndex).setDescription(value);
+            break;
         }
-        throw new NullPointerException("Task ID not found");
     }
 
 }
