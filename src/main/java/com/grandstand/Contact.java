@@ -20,7 +20,7 @@ public class Contact {
     private String phone;
     private String address;
 
-    public static enum UpdateableField {
+    public enum UpdateableField {
         FIRST_NAME, LAST_NAME, PHONE, ADDRESS
     }
 

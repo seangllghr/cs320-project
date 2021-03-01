@@ -9,7 +9,7 @@ public class Task {
     private String name;
     private String description;
 
-    public static enum UpdateableField {
+    public enum UpdateableField {
         NAME, DESCRIPTION
     }
 
