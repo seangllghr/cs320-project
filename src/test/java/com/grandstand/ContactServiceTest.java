@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class ContactServiceTest {
 
-    private ContactService cs;
+    private ContactService cs = new ContactService();
     private final String TEST_NAME = "Testy";
     private final String TEST_SURNAME = "McTestface";
     private final String TEST_PHONE = "5555555555";
@@ -39,12 +39,12 @@ public class ContactServiceTest {
     public void testAddBadContact() {
         // If we demonstrate that one of each error bubbles up, it's fair to
         // assume that others will, too.
-        assertThrows(IllegalArgumentException.class, () -> {
-                cs.addContact(TEST_NAME, TEST_SURNAME, "123-badnum", TEST_ADDRESS);
-            }, "Contact phone must be exactly 10 digits (0-9)");
-        assertThrows(NullPointerException.class, () -> {
-                cs.addContact(null, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS);
-            }, "Contact first name cannot be null");
+        assertThrows(IllegalArgumentException.class,
+                     () -> cs.addContact(TEST_NAME, TEST_SURNAME, "123-badnum", TEST_ADDRESS),
+                     "Contact phone must be exactly 10 digits (0-9)");
+        assertThrows(NullPointerException.class,
+                     () -> cs.addContact(null, TEST_SURNAME, TEST_PHONE, TEST_ADDRESS),
+                     "Contact first name cannot be null");
     }
 
     @Test
@@ -148,9 +148,9 @@ public class ContactServiceTest {
     public void testUpdateBadContact() {
         String contactId = "0000000047";
         String newName = "Jim";
-        assertThrows(NullPointerException.class, () -> {
-                cs.updateContact(contactId, UpdateableField.FIRST_NAME, newName);
-            }, "Contact ID not found");
+        assertThrows(NullPointerException.class,
+                     () -> cs.updateContact(contactId, UpdateableField.FIRST_NAME, newName),
+                     "Contact ID not found");
     }
 
     @Test
@@ -160,12 +160,12 @@ public class ContactServiceTest {
         String contactId = "0000000007";
         String newName = "Extralongfirstname";
 
-        assertThrows(IllegalArgumentException.class, () -> {
-                cs.updateContact(contactId, UpdateableField.FIRST_NAME, newName);
-            }, "Contact first name must not exceed 12 characters");
-        assertThrows(NullPointerException.class, () -> {
-                cs.updateContact(contactId, UpdateableField.ADDRESS, null);
-            }, "Contact address cannot be null");
+        assertThrows(IllegalArgumentException.class,
+                     () -> cs.updateContact(contactId, UpdateableField.FIRST_NAME, newName),
+                     "Contact first name must not exceed 12 characters");
+        assertThrows(NullPointerException.class,
+                     () -> cs.updateContact(contactId, UpdateableField.ADDRESS, null),
+                     "Contact address cannot be null");
     }
 
 }

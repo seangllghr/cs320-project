@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TaskTest {
-    private Task task;
+    private Task task = null;
 
     @BeforeEach
     public void setUp() {
@@ -17,9 +17,19 @@ public class TaskTest {
 
     @Test
     public void testNewTask_bad() {
-        assertThrows(IllegalArgumentException.class, () -> {
-                new Task("This very long ID is clearly bad.");
-            }, "Invalid ID string");
+        assertThrows(IllegalArgumentException.class,
+                     () -> new Task("This very long ID is clearly bad."),
+                     "Invalid ID string");
+        assertThrows(IllegalArgumentException.class,
+                     () -> new Task("ThisIDHasNoSpacesItIsJustLong"),
+                     "Invalid ID string");
+    }
+
+    @Test
+    public void testNewTask_null() {
+        assertThrows(NullPointerException.class,
+                     () -> new Task(null),
+                     "Task ID cannot be null");
     }
 
     @Test
@@ -60,16 +70,16 @@ public class TaskTest {
 
     @Test
     public void testSetName_overlength() {
-        assertThrows(IllegalArgumentException.class, () -> {
-                task.setName("This is a very long task");
-            }, "Task name must be less than 20 characters");
+        assertThrows(IllegalArgumentException.class,
+                     () -> task.setName("This is a very long task"),
+                     "Task name must be less than 20 characters");
     }
 
     @Test
     public void testSetName_null() {
-        assertThrows(NullPointerException.class, () -> {
-                task.setName(null);
-            }, "Task name cannot be null");
+        assertThrows(NullPointerException.class,
+                     () -> task.setName(null),
+                     "Task name cannot be null");
     }
 
     @Test
@@ -115,9 +125,9 @@ public class TaskTest {
     public void testSetDescription_overlength() {
         String newDescription =
                 "This description must be much longer than 50 characters.";
-        assertThrows(IllegalArgumentException.class, () -> {
-            task.setDescription(newDescription);
-        }, "Task description must not exceed 50 characters");
+        assertThrows(IllegalArgumentException.class,
+                     () -> task.setDescription(newDescription),
+                     "Task description must not exceed 50 characters");
     }
 
 }

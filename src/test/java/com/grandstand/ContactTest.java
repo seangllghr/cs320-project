@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ContactTest {
-    private Contact contact;
+    private Contact contact = null;
 
     @BeforeEach
     public void setUp() {

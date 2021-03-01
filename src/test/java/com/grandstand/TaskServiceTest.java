@@ -1,7 +1,7 @@
 package com.grandstand;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static com.grandstand.Task.UpdateableField;
 
@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 
 public class TaskServiceTest {
 
-    private TaskService ts;
+    private TaskService ts = new TaskService();
     private final String TEST_NAME = "This is a task";
-    private final String TEST_DESCRIPTION = "Astonishing! Exactly 50 characters of description";
+    private final String TEST_DESCRIPTION =
+        "Astonishing! Exactly 50 characters of description";
 
     @BeforeEach
     public void setUp() {
@@ -34,12 +35,13 @@ public class TaskServiceTest {
 
     @Test
     public void testAddBadTask() {
-        assertThrows(IllegalArgumentException.class, () -> {
-                ts.addTask("This is a bad task name because it's long.", TEST_DESCRIPTION);
-            }, "Task name must not exceed 20 characters");
-        assertThrows(NullPointerException.class, () -> {
-                ts.addTask(TEST_NAME, null);
-            }, "Task description cannot be null");
+        assertThrows(IllegalArgumentException.class,
+                     () -> ts.addTask("This is a bad task name because it's long.",
+                                      TEST_DESCRIPTION),
+                     "Task name must not exceed 20 characters");
+        assertThrows(NullPointerException.class,
+                     () -> ts.addTask(TEST_NAME, null),
+                     "Task description cannot be null");
     }
 
     @Test
@@ -51,9 +53,9 @@ public class TaskServiceTest {
     @Test
     public void testGetNonexistentTask() {
         String taskId = "0123456789";
-        assertThrows(NullPointerException.class, () -> {
-                ts.getTaskById(taskId);
-            }, "Task ID not found");
+        assertThrows(NullPointerException.class,
+                     () -> ts.getTaskById(taskId),
+                     "Task ID not found");
     }
 
     @Test
@@ -100,9 +102,9 @@ public class TaskServiceTest {
     @Test
     public void testDeleteBadTask() {
         String taskId = "1234567890";
-        assertThrows(NullPointerException.class, () -> {
-                ts.deleteTask(taskId);
-            }, "Task ID not found");
+        assertThrows(NullPointerException.class,
+                     () -> ts.deleteTask(taskId),
+                     "Task ID not found");
     }
 
     @Test
@@ -127,18 +129,18 @@ public class TaskServiceTest {
     public void testUpdateNonexistantTask() {
         String taskId = "0000000042";
         String newName = "Figure out Thursday";
-        assertThrows(NullPointerException.class, () -> {
-                ts.updateTask(taskId, UpdateableField.NAME, newName);
-            }, "Task ID not found");
+        assertThrows(NullPointerException.class,
+                     () -> ts.updateTask(taskId, UpdateableField.NAME, newName),
+                     "Task ID not found");
     }
 
     @Test
     public void testUpdateTask_badValue() {
         String taskId = "0000000003";
         String newName = "This name is too long";
-        assertThrows(IllegalArgumentException.class, () -> {
-                ts.updateTask(taskId, UpdateableField.NAME, newName);
-            }, "Task name must not exceed 20 characters");
+        assertThrows(IllegalArgumentException.class,
+                     () -> ts.updateTask(taskId, UpdateableField.NAME, newName),
+                     "Task name must not exceed 20 characters");
     }
 
 }
