@@ -28,12 +28,18 @@ public class Contact {
      * Initialize an empty Contact with ID <code>contactId</code>
      *
      * @param contactId an alphanumeric ID string of 10 or fewer characters
+     * @throws IllegalArgumentException if ID string is invalid
+     * @throws NullPointerException if passed null
      */
-    public Contact(String contactId) throws IllegalArgumentException {
-        if (contactId.matches("[0-9A-Za-z]+")) {
+    public Contact(String contactId)
+        throws IllegalArgumentException,NullPointerException {
+        if (contactId == null) {
+            throw new NullPointerException("Contact ID cannot be null");
+        }
+        if (contactId.matches("[0-9A-Za-z]{1,10}")) {
             this.ID = contactId;
         } else {
-            throw new IllegalArgumentException("Invalid ID string.");
+            throw new IllegalArgumentException("Invalid ID string");
         }
         this.firstName = "";
         this.lastName = "";
