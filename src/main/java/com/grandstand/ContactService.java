@@ -6,11 +6,11 @@ import java.util.Vector;
  * A collection of contacts with facilities to manipulate the collection
  */
 public class ContactService {
-    private Vector<Contact> contactList;
+    private final Vector<Contact> contactList;
     private int idCounter;
 
     public ContactService() {
-        this.contactList = new Vector<Contact>();
+        this.contactList = new Vector<>();
         this.idCounter = 1;
     }
 
@@ -44,35 +44,48 @@ public class ContactService {
     }
 
     /**
-     * Retrieve a {@code Contact} object from the collection
-     * @param contactId the ID string of the desired contact
-     * @return the {@code Contact} object matching {@code contactId}
-     * @throws NullPointerException if the target contact cannot be found
+     * Find a contact in the list with the specified ID and return its index
+     * @param contactId the ID string to match
+     * @return the index of the target contact
+     * @throws IllegalArgumentException if the ID string is invalid
+     * @throws NullPointerException if {@code null} is passed or ID not found
      */
-    public Contact getContactById(String contactId) throws NullPointerException {
+    private int findContact(String contactId)
+        throws IllegalArgumentException, NullPointerException {
         for (int i = 0; i < this.contactList.size(); i++) {
             String thisId = this.contactList.elementAt(i).getId();
             if (thisId.equals(contactId)) {
-                return this.contactList.elementAt(i);
+                return i;
             }
         }
         throw new NullPointerException("Contact ID not found");
     }
 
     /**
-     * Remove a contact from the collection
-     * @param contactId the ID string of the contact to remove
-     * @throws NullPointerException if the contact does not exist
+     * Retrieve a {@code Contact} object from the collection
+     *
+     * @param contactId the ID string of the desired contact
+     * @return the {@code Contact} object matching {@code contactId}
+     * @throws IllegalArgumentException if the ID string is invalid
+     * @throws NullPointerException if {@code null} is passed or ID not found
      */
-    public void deleteContact(String contactId) throws NullPointerException{
-        for (int i = 0; i < this.contactList.size(); i++) {
-            String thisId = this.contactList.elementAt(i).getId();
-            if (thisId.equals(contactId)) {
-                this.contactList.remove(i);
-                return;
-            }
-        }
-        throw new NullPointerException("Contact ID not found");
+    public Contact getContactById(String contactId)
+        throws IllegalArgumentException, NullPointerException {
+        int contactIndex = findContact(contactId);
+		return this.contactList.elementAt(contactIndex);
+    }
+
+    /**
+     * Remove a contact from the collection
+     *
+     * @param contactId the ID string of the contact to remove
+     * @throws IllegalArgumentException if the ID string is invalid
+     * @throws NullPointerException if {@code null} is passed or ID not found
+     */
+    public void deleteContact(String contactId)
+        throws IllegalArgumentException, NullPointerException {
+        int contactIndex = findContact(contactId);
+		this.contactList.remove(contactIndex);
     }
 
     /**
@@ -81,29 +94,25 @@ public class ContactService {
      * @param contactId the ID string of the contact to update
      * @param field the contact field to update
      * @param value the new value for the updated field
-     * @throws NullPointerException if the contact does not exist
+     * @throws IllegalArgumentException if ID string or value is invalid
+     * @throws NullPointerException if {@code null} is passed or ID not found
      */
     public void updateContact(String contactId, Contact.UpdateableField field, String value)
         throws IllegalArgumentException, NullPointerException {
-        for (int i = 0; i < this.contactList.size(); i++) {
-            String thisId = this.contactList.elementAt(i).getId();
-            if (thisId.equals(contactId)) {
-                switch (field) {
-                case FIRST_NAME:
-                    this.contactList.elementAt(i).setFirstName(value);
-                    return;
-                case LAST_NAME:
-                    this.contactList.elementAt(i).setLastName(value);
-                    return;
-                case PHONE:
-                    this.contactList.elementAt(i).setPhone(value);
-                    return;
-                case ADDRESS:
-                    this.contactList.elementAt(i).setAddress(value);
-                    return;
-                }
-            }
+        int contactIndex = findContact(contactId);
+        switch (field) {
+        case FIRST_NAME:
+            this.contactList.elementAt(contactIndex).setFirstName(value);
+            break;
+        case LAST_NAME:
+            this.contactList.elementAt(contactIndex).setLastName(value);
+            break;
+        case PHONE:
+            this.contactList.elementAt(contactIndex).setPhone(value);
+            break;
+        case ADDRESS:
+            this.contactList.elementAt(contactIndex).setAddress(value);
+            break;
         }
-        throw new NullPointerException("Contact ID not found");
     }
 }
